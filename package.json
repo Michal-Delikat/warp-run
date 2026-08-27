@@ -8,10 +8,13 @@
     "packages/shared"
   ],
   "scripts": {
+    "lint": "oxlint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "@types/node": "^26.4.0",
+    "oxlint": "^1.75.0",
     "typescript": "~6.0.2"
   }
+}
 }
