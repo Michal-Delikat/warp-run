@@ -11,7 +11,7 @@ function App() {
   if (isLoading) {
     return <p>Logging...</p>
   } else if (!token) {
-    return <LoginForm />
+    return <LoginForm/>
   } else {
     return (
       <>

@@ -1,5 +1,5 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import api from "../../api/api.ts";
 import { useAuth } from "../auth/AuthContext";
 
 interface JumpButtonProps {
@@ -7,15 +7,13 @@ interface JumpButtonProps {
 }
 
 function JumpButton({ shipId }: JumpButtonProps) {
-    const { token } = useAuth();
     const queryClient = useQueryClient();
 
     const jumpMutation = useMutation({
         mutationFn: async () => {
-            const response = await axios.post(
-                `http://localhost:3000/ships/${shipId}/jump`,
+            const response = await api.post(
+                `/ships/${shipId}/jump`,
                 {},
-                { headers: { Authorization: `Bearer ${token}` }},
             );
             return response.data;
         },

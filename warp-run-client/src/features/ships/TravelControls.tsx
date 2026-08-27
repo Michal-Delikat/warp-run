@@ -1,5 +1,5 @@
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import api from "../../api/api.ts";
 import { useAuth } from "../auth/AuthContext";
 
 interface TravleControlsProps {
@@ -14,9 +14,8 @@ function TravelControls({ shipId, currentPlanetId }: TravleControlsProps) {
     const { data: neighbors } = useQuery({
         queryKey: ['planet-neighbors', currentPlanetId],
         queryFn: async () => {
-            const response = await axios.get(
-                `http://localhost:3000/planets/${currentPlanetId}/neighbors`,
-                { headers: { Authorization: `Bearer ${token}` } }
+            const response = await api.get(
+                `/planets/${currentPlanetId}/neighbors`,
             );
             return response.data;
         },
@@ -25,10 +24,9 @@ function TravelControls({ shipId, currentPlanetId }: TravleControlsProps) {
 
     const travelMutation = useMutation({
         mutationFn: async (destinationPlanetId: string) => {
-            const response = await axios.post(
-                `http://localhost:3000/ships/${shipId}/travel`,
+            const response = await api.post(
+                `/ships/${shipId}/travel`,
                 { destinationPlanetId },
-                { headers: { Authorization: `Bearer ${token}` }}
             );
             return response.data;
         },

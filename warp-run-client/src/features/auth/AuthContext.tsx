@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { setupInterceptors } from "../../api/api.ts";
 
 type AuthContextType = {
   token: string | null;
@@ -15,6 +16,13 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(() => localStorage.getItem("token"));
 
+  function logout() {
+    localStorage.removeItem("token");
+    setToken(null);
+  }
+
+  setupInterceptors(logout);
+
   const loginMutation = useMutation({
     mutationFn: async (credentials: { username: string; password: string }) => {
       const response = await axios.post("http://localhost:3000/login", credentials);
@@ -25,11 +33,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem("token", receivedToken);
     },
   });
-
-  function logout() {
-    localStorage.removeItem("token");
-    setToken(null);
-  }
 
   return (
     <AuthContext.Provider value={{ token, login: loginMutation.mutate, logout, isLoading: loginMutation.isPending }}>

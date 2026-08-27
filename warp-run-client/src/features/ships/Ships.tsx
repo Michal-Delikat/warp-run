@@ -1,21 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { useAuth } from '../auth/AuthContext';
+import api from "../../api/api.ts";
 import type { ShipData } from './types';
 import Ship from "./Ship.tsx"; 
-import "./Ships.css";
 
 function Ships() {
-    const { token } = useAuth();
     const { data, isPending, isError, error } = useQuery({
         queryKey: ['me/ships'],
         queryFn: async () => {
-            const meShipsResponse = await axios.get('http://localhost:3000/me/ships', {
-                headers: { Authorization: `Bearer ${token}` },
-            });
+            const meShipsResponse = await api.get('/me/ships');
             return meShipsResponse.data;
-        },
-        enabled: !!token,
+        }
     });
 
     if (isPending) return <p>Player ships loading...</p>;

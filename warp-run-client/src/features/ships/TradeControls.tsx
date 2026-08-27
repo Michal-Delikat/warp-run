@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { useAuth } from "../auth/AuthContext";
+import api from "../../api/api.ts";
 import type { TradeOptionData } from "../types";
 import type { CargoItem } from "./types";
 
@@ -12,39 +11,27 @@ interface TradeControlProps {
 }
 
 function TradeControls({ currentPlanetId, shipId, cargo, cargoCapacity }: TradeControlProps) {
-    const { token } = useAuth();
     const queryClient = useQueryClient();
 
     const { data: playerData } = useQuery({
         queryKey: ['me'],
-        queryFn: async () => {
-            const response = await axios.get(
-                `http://localhost:3000/me`,
-                { headers: { Authorization: `Bearer ${token}` }}
-            );
-            return response.data;
-        },
-        enabled: !!token && !!currentPlanetId,
+        enabled: false,
     });
 
     const { data: marketData } = useQuery({
         queryKey: ['planet-market', currentPlanetId],
         queryFn: async () => {
-            const response = await axios.get(
-                `http://localhost:3000/planets/${currentPlanetId}/market`,
-                { headers: { Authorization: `Bearer ${token}` }}
-            );
+            const response = await api.get(`/planets/${currentPlanetId}/market`);
             return response.data;
         },
-        enabled: !!token && !!currentPlanetId,
+        enabled: !!currentPlanetId,
     });
 
     const buyMutation = useMutation({
         mutationFn: async ({resourceId, quantity}: { resourceId: string; quantity: number }) => {
-            const response = await axios.post(
-                `http://localhost:3000/planets/${currentPlanetId}/market/buy`,
+            const response = await api.post(
+                `/planets/${currentPlanetId}/market/buy`,
                 { resourceId, quantity, shipId },
-                { headers: { Authorization: `Bearer ${token}` }},
             );
             return response.data;
         },
@@ -57,10 +44,9 @@ function TradeControls({ currentPlanetId, shipId, cargo, cargoCapacity }: TradeC
 
     const sellMutation = useMutation({
         mutationFn: async ({resourceId, quantity}: { resourceId: string, quantity: number }) => {
-            const response = await axios.post(
-                `http://localhost:3000/planets/${currentPlanetId}/market/sell`,
+            const response = await api.post(
+                `/planets/${currentPlanetId}/market/sell`,
                 { resourceId, quantity, shipId },
-                { headers: { Authorization: `Bearer ${token}` }},
             );
             return response.data;
         },
