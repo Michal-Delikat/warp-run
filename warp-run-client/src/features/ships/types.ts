@@ -1,4 +1,4 @@
-export interface CargoItem {
+export interface CargoItemModel {
     id: string;
     quantity: number;
     resource: {
@@ -7,7 +7,7 @@ export interface CargoItem {
     }
 }
 
-export interface ShipData {
+export interface ShipModel {
     id: string;
     name: string;
     currentPlanet: { id: string; name: string; } | null;
@@ -16,6 +16,6 @@ export interface ShipData {
     arrivalAt: any;
     fuel: number;
     cargoCapacity: number;
-    cargo: Array<CargoItem>;
+    cargo: Array<CargoItemModel>;
 }
 

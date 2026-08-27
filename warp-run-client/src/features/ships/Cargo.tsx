@@ -1,7 +1,7 @@
-import type { CargoItem } from "./types";
+import type { CargoModel } from "./types";
 
 interface CargoProps {
-    cargo: Array<CargoItem>;
+    cargo: Array<CargoModel>;
     cargoCapacity: number;
 }
 

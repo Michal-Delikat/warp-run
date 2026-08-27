@@ -5,7 +5,6 @@ const api = axios.create({
 });
 
 export const setupInterceptors = (logoutFn: () => void) => {
-    console.log("setting up interceptor...");
     api.interceptors.request.use((config) => {
         const token = localStorage.getItem('token');
         if (token) {

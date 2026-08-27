@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAuth } from '../auth/AuthContext';
-import type { AgentData } from './types';
+import type { AgentModel } from './types.ts';
 import Agent from "./Agent.tsx"; 
 
 function Agents() {
@@ -24,7 +24,7 @@ function Agents() {
         <>
             <h2>Agents</h2>
             <ul>
-                {data.map((agent: AgentData) => {
+                {data.map((agent: AgentModel) => {
                     return <li key={agent.id}><Agent agentData={agent}/></li>
                 })}
             </ul>

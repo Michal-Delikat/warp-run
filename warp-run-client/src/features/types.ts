@@ -1,4 +1,4 @@
-export interface TradeOptionData {
+export interface TradeOptionModel {
     id: string;
     price: number;
     stock: number;

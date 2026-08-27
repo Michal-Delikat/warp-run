@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import api from "../../api/api.ts";
-import type { ShipData } from './types';
+import type { ShipModel } from './types';
 import Ship from "./Ship.tsx"; 
 
 function Ships() {
@@ -19,7 +19,7 @@ function Ships() {
         <>
             <h2>Ships</h2>
             <ul>
-                {data.map((ship: ShipData) => {
+                {data.map((ship: ShipModel) => {
                     return <li key={ship.id}><Ship shipData={ship}/></li>
                 })}
             </ul>

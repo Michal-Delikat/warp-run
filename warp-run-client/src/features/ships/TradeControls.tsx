@@ -1,21 +1,25 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../api/api.ts";
-import type { TradeOptionData } from "../types";
-import type { CargoItem } from "./types";
+import type { TradeOptionModel } from "../types";
+import type { CargoItemModel } from "./types";
+import type { PlayerModel } from "../player/types.ts";
 
 interface TradeControlProps {
     currentPlanetId: string | undefined;
     shipId: string;
-    cargo: CargoItem[];
+    cargo: CargoItemModel[];
     cargoCapacity: number;
 }
 
 function TradeControls({ currentPlanetId, shipId, cargo, cargoCapacity }: TradeControlProps) {
     const queryClient = useQueryClient();
 
-    const { data: playerData } = useQuery({
+    const { data: playerData } = useQuery<PlayerModel>({
         queryKey: ['me'],
-        enabled: false,
+        queryFn: async () => {
+            const response = await api.get('/me');
+            return response.data;
+        }
     });
 
     const { data: marketData } = useQuery({
@@ -64,10 +68,10 @@ function TradeControls({ currentPlanetId, shipId, cargo, cargoCapacity }: TradeC
         <>
             <h4>Trade options</h4>
             <ul>
-                {marketData?.map((tradeOption: TradeOptionData) => {
+                {marketData?.map((tradeOption: TradeOptionModel) => {
                     const ownedQuantity = cargo.find(cargoItem => cargoItem.resource.id === tradeOption.resource.id)?.quantity ?? 0;
                     const canBuy = 
-                        playerData?.cash >= tradeOption.price * 5 &&
+                        (playerData?.cash ?? 0) >= tradeOption.price * 5 &&
                         tradeOption.stock >= 5 &&
                         freeCargo >= 5;
 

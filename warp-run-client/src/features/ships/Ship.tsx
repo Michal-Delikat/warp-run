@@ -1,4 +1,4 @@
-import type { ShipData } from "./types";
+import type { ShipModel } from "./types";
 import Countdown from './Countdown';
 import Cargo from "./Cargo";
 import JumpButton from "./JumpButton";
@@ -6,7 +6,7 @@ import TradeControls from './TradeControls';
 import TravelControls from './TravelControls';
 
 interface ShipProps {
-    shipData: ShipData
+    shipData: ShipModel
 }
 
 function Ship({ shipData } : ShipProps) {    

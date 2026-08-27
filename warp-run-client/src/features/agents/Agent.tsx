@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useAuth } from "../auth/AuthContext";
-import type { TradeOptionData } from "../types";
-import type { AgentData } from "./types";
+import type { TradeOptionModel } from "../types";
+import type { AgentModel } from "./types";
 
 interface AgentProps {
-    agentData: AgentData;
+    agentData: AgentModel;
 }
 
 function Agent({ agentData }: AgentProps) {
@@ -27,7 +27,7 @@ function Agent({ agentData }: AgentProps) {
             <h3>{agentData.name} stationed on {agentData.planet.name}</h3>
             <h4>Trade options</h4>
             <ul>
-                {marketData?.map((tradeOption: TradeOptionData) => {
+                {marketData?.map((tradeOption: TradeOptionModel) => {
                     return (
                         <li key={tradeOption.id}>
                             <p>{tradeOption.resource.name}: {tradeOption.price} $</p>
