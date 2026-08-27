@@ -1,0 +1,17 @@
+{
+  "name": "warp-run",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "warp-run-client",
+    "warp-run-server",
+    "packages/shared"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.0",
+    "typescript": "~6.0.2"
+  }
+}
