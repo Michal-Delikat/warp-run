@@ -1,17 +1,18 @@
+import { useEffect } from "react";
 import type { ReactNode } from "react";
 import { createContext, useContext, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { setupInterceptors } from "../../api/api.ts";
 
-type AuthContextType = {
+type AuthContextModel = {
   token: string | null;
   login: (credentials: { username: string; password: string }) => void;
   logout: () => void;
   isLoading: boolean;
 };
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextModel | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(() => localStorage.getItem("token"));
@@ -21,7 +22,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(null);
   }
 
-  setupInterceptors(logout);
+  useEffect(() => {
+    setupInterceptors(logout);
+  }, []);
 
   const loginMutation = useMutation({
     mutationFn: async (credentials: { username: string; password: string }) => {
@@ -32,6 +35,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setToken(receivedToken);
       localStorage.setItem("token", receivedToken);
     },
+    onError: (error) => {
+      console.error(error);
+    }
   });
 
   return (

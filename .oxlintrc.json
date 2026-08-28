@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "vitest"],
+  "rules": {
+    "typescript/no-explicit-any": "error",
+    "vitest/expect-expect": "error"
+  }
+}
