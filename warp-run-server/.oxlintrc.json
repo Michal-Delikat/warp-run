@@ -1,7 +1,5 @@
 {
   "extends": ["../.oxlintrc.json"],
   "plugins": ["node"],
-  "rules": {
-    "node/no-process-exit": "warn"
-  }
+  "rules": {}
 }

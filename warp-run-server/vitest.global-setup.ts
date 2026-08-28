@@ -19,8 +19,12 @@ export async function setup() {
       env: { ...process.env, DATABASE_URL: connectionUri },
       stdio: "pipe",
     });
-  } catch (error: any) {
-    console.error("Database sync failed:", error.stderr?.toString() || error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Database sync failed:", error.message);
+    } else {
+      console.error("Database sync failed:", error);
+    }
     throw error;
   }
 }

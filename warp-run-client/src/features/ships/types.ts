@@ -13,7 +13,7 @@ export interface ShipModel {
     currentPlanet: { id: string; name: string; } | null;
     departurePlanet: { name: string } | null;
     destinationPlanet: { name: string } | null;
-    arrivalAt: any | null;
+    arrivalAt: string | null;
     fuel: number;
     cargoCapacity: number;
     cargo: Array<CargoItemModel>;

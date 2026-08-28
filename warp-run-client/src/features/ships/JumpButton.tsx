@@ -1,6 +1,5 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import api from "../../api/api.ts";
-import { useAuth } from "../auth/AuthContext";
 
 interface JumpButtonProps {
     shipId: string;

@@ -16,7 +16,7 @@ function Ship({ shipData } : ShipProps) {
         <div className="ship-wrapper">
             <h3>{shipData.name}</h3>
             {isInTransit  && <p>{shipData.departurePlanet?.name ?? "Null"} {'=>'} {shipData.destinationPlanet?.name ?? "Null"}</p>}
-            {isInTransit  && <p>Arrival in: <Countdown arrivalAt={shipData.arrivalAt} /></p>}
+            {isInTransit  && <p>Arrival in: <Countdown arrivalAt={shipData.arrivalAt!} /></p>}
             {isInTransit  && <JumpButton shipId={shipData.id}/>}
             {!isInTransit && <p>Currently at: {shipData.currentPlanet?.name}</p>}
             <Cargo cargo={shipData.cargo} cargoCapacity={shipData.cargoCapacity}/>

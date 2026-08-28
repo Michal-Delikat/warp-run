@@ -4,6 +4,7 @@ import { db } from "../db/index.ts";
 import { planets, planetMarket, ships, shipCargo, players } from "../db/schema.ts";
 import { requireAuth } from "../middleware/auth.ts";
 import { resolveMarketRegeneration } from "../db/resolveMarketRegeneration.ts";
+import { ApiError } from "./types.ts";
 
 const router = Router();
 
@@ -130,10 +131,11 @@ router.post<{ id: string }>("/planets/:id/market/buy", requireAuth, async (req, 
         });
 
         res.json(result);
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error(error);
-        if (error.status) {
-            return res.status(error.status).json({ error: error.message });
+        if (typeof error === "object" && error !== null && "status" in error && "message" in error) {
+            const apiError = error as ApiError;
+            return res.status(apiError.status).json({ error: apiError.message });
         }
         res.status(500).json({ error: "Purchase was unsuccesful"});
     }
@@ -207,10 +209,11 @@ router.post<{ id: string}>("/planets/:id/market/sell", requireAuth, async (req, 
         });
 
         res.json(result);
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error(error);
-        if (error.status) {
-            return res.status(error.status).json({ error: error.message });
+        if (typeof error === "object" && error !== null && "status" in error && "message" in error) {
+            const apiError = error as ApiError;
+            return res.status(apiError.status).json({ error: apiError.message });
         }
         res.status(500).json({ error: "Sell was unsuccesful"});
     }

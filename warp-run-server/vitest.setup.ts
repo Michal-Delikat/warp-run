@@ -10,7 +10,7 @@ beforeEach(async () => {
     AND table_type = 'BASE TABLE'
   `);
   
-  const tables = (tablesResult as any[]).map(row => row.table_name);
+  const tables = tablesResult.map(row => row.table_name);
   
   if (tables.length > 0) {
     await db.execute(sql.raw(`
