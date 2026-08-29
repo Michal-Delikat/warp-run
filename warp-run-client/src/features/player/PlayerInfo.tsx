@@ -1,17 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "../auth/AuthContext";
 import api from "../../api/api";
 import LogOutButton from "./LogOutButton";
 
 function PlayerInfo() {
-    const { token } = useAuth();
     const { data, isPending, isError, error } = useQuery({
         queryKey: ['me'],
         queryFn: async () => {
             const meResponse = await api.get('/me');
             return meResponse.data;
-        },
-        enabled: !!token
+        }
     });
 
     if (isPending) return <p>Player info loading...</p>;

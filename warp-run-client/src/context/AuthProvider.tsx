@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
-import { authStore } from "../../api/authStore";
+import { authStore } from "../api/authStore";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(() => localStorage.getItem("token"));

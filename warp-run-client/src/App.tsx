@@ -1,4 +1,4 @@
-import { useAuth } from "./features/auth/AuthContext";
+import { useAuth } from "./context/AuthContext";
 import LoginForm from "./features/auth/LoginForm";
 import PlayerInfo from "./features/player/PlayerInfo";
 import Ships from "./features/ships/Ships";
