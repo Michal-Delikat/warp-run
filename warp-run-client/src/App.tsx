@@ -1,9 +1,8 @@
-import { useAuth } from "./features/auth/AuthContext.tsx";
-import LoginForm from "./features/auth/LoginForm.tsx";
-import PlayerInfo from "./features/player/PlayerInfo.tsx";
-import Ships from "./features/ships/Ships.tsx";
-import Agents from "./features/agents/Agents.tsx";
-import "./App.css";
+import { useAuth } from "./features/auth/AuthContext";
+import LoginForm from "./features/auth/LoginForm";
+import PlayerInfo from "./features/player/PlayerInfo";
+import Ships from "./features/ships/Ships";
+import Agents from "./features/agents/Agents";
 
 function App() {
   const { token, isLoading } = useAuth();

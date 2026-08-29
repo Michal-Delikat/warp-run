@@ -1,7 +1,7 @@
-import type { CargoModel } from "./types";
+import type { CargoItemModel } from "./types";
 
 interface CargoProps {
-    cargo: Array<CargoModel>;
+    cargo: Array<CargoItemModel>;
     cargoCapacity: number;
 }
 
@@ -12,7 +12,7 @@ function Cargo({ cargo, cargoCapacity }: CargoProps) {
             <h4>Cargo</h4>
             <p>Max cargo capacity: {cargoCapacity}</p>
             <ul>
-                {cargo.map((cargoItem) => <li key={cargoItem.id}>{cargoItem.quantity} {cargoItem.resource.name}</li>)}
+                {cargo.map((cargoItem: CargoItemModel) => <li key={cargoItem.id}>{cargoItem.quantity} {cargoItem.resource.name}</li>)}
             </ul>
         </>
     );

@@ -1,8 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import api from "../../api/api.ts";
+import api from "../../api/api";
 import type { TradeOptionModel } from "../types";
 import type { CargoItemModel } from "./types";
-import type { PlayerModel } from "../player/types.ts";
+import type { PlayerModel } from "../player/types";
 
 interface TradeControlProps {
     currentPlanetId: string | undefined;

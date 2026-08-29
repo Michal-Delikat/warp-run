@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "../auth/AuthContext.tsx";
-import api from "../../api/api.ts";
+import { useAuth } from "../auth/AuthContext";
+import api from "../../api/api";
 import LogOutButton from "./LogOutButton";
-import "./PlayerInfo.css";
 
 function PlayerInfo() {
     const { token } = useAuth();

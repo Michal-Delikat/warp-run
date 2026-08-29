@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import api from "../../api/api.ts";
+import api from "../../api/api";
 import type { ShipModel } from './types';
-import Ship from "./Ship.tsx"; 
+import Ship from "./Ship"; 
 
 function Ships() {
     const { data, isPending, isError, error } = useQuery({

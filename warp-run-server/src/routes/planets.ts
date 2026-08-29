@@ -4,7 +4,7 @@ import { db } from "../db/index.ts";
 import { planets, planetMarket, ships, shipCargo, players } from "../db/schema.ts";
 import { requireAuth } from "../middleware/auth.ts";
 import { resolveMarketRegeneration } from "../db/resolveMarketRegeneration.ts";
-import { ApiError } from "./types.ts";
+import type { ApiError } from "./types.ts";
 
 const router = Router();
 

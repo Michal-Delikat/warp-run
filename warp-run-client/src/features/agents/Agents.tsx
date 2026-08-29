@@ -1,20 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { useAuth } from '../auth/AuthContext';
-import type { AgentModel } from './types.ts';
-import Agent from "./Agent.tsx"; 
+import api from '../../api/api';
+import type { AgentModel } from './types';
+import Agent from "./Agent"; 
 
 function Agents() {
-    const { token } = useAuth();
     const { data, isPending, isError, error } = useQuery({
         queryKey: ['me/agents'],
         queryFn: async () => {
-            const meAgentsResponse = await axios.get(`http://localhost:3000/me/agents`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
+            const meAgentsResponse = await api.get('/me/agents');
             return meAgentsResponse.data;
-        },
-        enabled: !!token,
+        }
     });
 
     if (isPending) return <p>Player agents loading...</p>;

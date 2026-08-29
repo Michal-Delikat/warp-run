@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { setupInterceptors } from "../../api/api.ts";
-import { AuthContext } from "./AuthContext.tsx";
+import { AuthContext } from "./AuthContext";
+import { authStore } from "../../api/authStore";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(() => localStorage.getItem("token"));
@@ -14,8 +14,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    setupInterceptors(logout);
-  }, []);
+    authStore.setToken(token);
+  }, [token]);
+
+  useEffect(() => {
+    authStore.setUnauthorizedHandler(logout);
+  }, [logout]);
 
   const loginMutation = useMutation({
     mutationFn: async (credentials: { username: string; password: string }) => {

@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useAuth } from "../auth/AuthContext";
+import api from '../../api/api';
 import type { TradeOptionModel } from "../types";
 import type { AgentModel } from "./types";
 
@@ -9,17 +8,12 @@ interface AgentProps {
 }
 
 function Agent({ agentData }: AgentProps) {
-    const { token } = useAuth();
     const { data: marketData } = useQuery({
         queryKey: ['planet-market', agentData.planet.id],
         queryFn: async () => {
-            const response = await axios.get(
-                `http://localhost:3000/planets/${agentData.planet.id}/market`,
-                { headers: { Authorization: `Bearer ${token}` }}
-            );
+            const response = await api.get(`/planets/${agentData.planet.id}/market`);
             return response.data;
-        },
-        enabled: !!token
+        }
     })
 
     return (

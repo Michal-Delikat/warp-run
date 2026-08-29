@@ -1,6 +1,5 @@
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
-import api from "../../api/api.ts";
-import { useAuth } from "../auth/AuthContext";
+import api from "../../api/api";
 
 interface TravleControlsProps {
     shipId: string;
@@ -8,7 +7,6 @@ interface TravleControlsProps {
 }
 
 function TravelControls({ shipId, currentPlanetId }: TravleControlsProps) {
-    const { token } = useAuth();
     const queryClient = useQueryClient();
 
     const { data: neighbors } = useQuery({
@@ -19,7 +17,7 @@ function TravelControls({ shipId, currentPlanetId }: TravleControlsProps) {
             );
             return response.data;
         },
-        enabled: !!token && !!currentPlanetId,
+        enabled: !!currentPlanetId,
     });
 
     const travelMutation = useMutation({
