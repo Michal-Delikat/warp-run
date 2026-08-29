@@ -1,23 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
-import api from "../../api/api";
+import { usePlayer } from "../../context/PlayerContext";
 import LogOutButton from "./LogOutButton";
 
 function PlayerInfo() {
-    const { data, isPending, isError, error } = useQuery({
-        queryKey: ['me'],
-        queryFn: async () => {
-            const meResponse = await api.get('/me');
-            return meResponse.data;
-        }
-    });
+    const { player, isLoading } = usePlayer();
 
-    if (isPending) return <p>Player info loading...</p>;
-    if (isError) return <p>Error occured: {error.message}</p>;
+    if (isLoading) {
+        return (
+            <p>Player info loading</p>
+        );
+    }
 
     return (
         <div className="player-info-wrapper">
-            <p className="player-username">{data.username}</p>
-            <p className="player-cash">{data.cash}$</p>
+            <p className="player-username">{player!.username}</p>
+            <p className="player-cash">{player!.cash}$</p>
             <LogOutButton></LogOutButton>
         </div>
     );

@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../api/api";
 import type { TradeOptionModel } from "../types";
 import type { CargoItemModel } from "./types";
-import type { PlayerModel } from "../player/types";
+import { usePlayer } from "../../context/PlayerContext";
 
 interface TradeControlProps {
     currentPlanetId: string | undefined;
@@ -14,13 +14,7 @@ interface TradeControlProps {
 function TradeControls({ currentPlanetId, shipId, cargo, cargoCapacity }: TradeControlProps) {
     const queryClient = useQueryClient();
 
-    const { data: playerData } = useQuery<PlayerModel>({
-        queryKey: ['me'],
-        queryFn: async () => {
-            const response = await api.get('/me');
-            return response.data;
-        }
-    });
+    const { player } = usePlayer();
 
     const { data: marketData } = useQuery({
         queryKey: ['planet-market', currentPlanetId],
@@ -71,7 +65,7 @@ function TradeControls({ currentPlanetId, shipId, cargo, cargoCapacity }: TradeC
                 {marketData?.map((tradeOption: TradeOptionModel) => {
                     const ownedQuantity = cargo.find(cargoItem => cargoItem.resource.id === tradeOption.resource.id)?.quantity ?? 0;
                     const canBuy = 
-                        (playerData?.cash ?? 0) >= tradeOption.price * 5 &&
+                        (player?.cash ?? 0) >= tradeOption.price * 5 &&
                         tradeOption.stock >= 5 &&
                         freeCargo >= 5;
 
