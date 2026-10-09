@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import type { ReactNode } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -8,10 +8,10 @@ import { authStore } from "../api/authStore";
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(() => localStorage.getItem("token"));
 
-  function logout() {
+  const logout = useCallback(() => {
     localStorage.removeItem("token");
     setToken(null);
-  }
+  }, []);
 
   useEffect(() => {
     authStore.setToken(token);
